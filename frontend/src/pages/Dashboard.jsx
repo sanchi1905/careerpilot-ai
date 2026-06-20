@@ -38,15 +38,15 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0B0F19]">
+    <div className="flex flex-col min-h-screen cp-page">
       <Navbar />
 
       <main className="flex-grow py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         {/* Dashboard Title */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-slate-800 pb-6 mb-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-cp-border pb-6 mb-8">
           <div>
-            <h1 className="text-3xl font-extrabold text-white">Application Dashboard</h1>
-            <p className="text-slate-400 text-sm mt-1">Track and manage your placement interviews in real-time.</p>
+            <h1 className="text-3xl font-extrabold cp-text-primary">Application Dashboard</h1>
+            <p className="cp-text-secondary text-sm mt-1">Track and manage your placement interviews in real-time.</p>
           </div>
           <span className="mt-4 md:mt-0 text-xs font-semibold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 rounded-full inline-block">
             Connected to placements database
@@ -56,24 +56,24 @@ export default function Dashboard() {
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {stats.map((stat, idx) => (
-            <div key={idx} className="bg-[#111827]/30 border border-slate-800/80 p-6 rounded-2xl backdrop-blur-sm">
+            <div key={idx} className="cp-card p-6">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-400 font-medium">{stat.title}</span>
+                <span className="text-sm cp-text-secondary font-medium">{stat.title}</span>
                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
-              <h2 className="text-3xl font-bold text-white mt-4">{stat.value}</h2>
+              <h2 className="text-3xl font-bold cp-text-primary mt-4">{stat.value}</h2>
             </div>
           ))}
         </div>
 
-        {/* Kanban Board Layout */}
+        {/* Kanban Board */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {columns.map((col, idx) => (
-            <div key={idx} className="bg-[#0A0D15]/60 border border-slate-900 rounded-2xl p-6">
+            <div key={idx} className="cp-card p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="font-bold text-white flex items-center space-x-2">
+                <h3 className="font-bold cp-text-primary flex items-center space-x-2">
                   <span>{col.title}</span>
-                  <span className="text-xs bg-slate-800 px-2 py-0.5 rounded-full text-slate-400">
+                  <span className="text-xs bg-slate-800 dark:bg-slate-800 light:bg-slate-200 px-2 py-0.5 rounded-full cp-text-secondary">
                     {col.count}
                   </span>
                 </h3>
@@ -81,11 +81,15 @@ export default function Dashboard() {
 
               <div className="space-y-4">
                 {col.items.map((item, itemIdx) => (
-                  <div key={itemIdx} className="bg-[#111827]/40 border border-slate-850 p-5 rounded-xl hover:border-slate-700 transition-colors duration-200 cursor-pointer">
+                  <div
+                    key={itemIdx}
+                    className="cp-card p-5 hover:border-indigo-500/30 transition-colors duration-200 cursor-pointer"
+                    style={{ borderRadius: '0.75rem' }}
+                  >
                     <span className="text-xs text-indigo-400 font-semibold">{item.company}</span>
-                    <h4 className="font-bold text-slate-200 text-sm mt-1">{item.role}</h4>
-                    <p className="text-slate-400 text-xs mt-1">{item.location}</p>
-                    <div className="mt-4 pt-3 border-t border-slate-800/50 flex items-center justify-between text-[11px] text-slate-500">
+                    <h4 className="font-bold cp-text-primary text-sm mt-1">{item.role}</h4>
+                    <p className="cp-text-secondary text-xs mt-1">{item.location}</p>
+                    <div className="mt-4 pt-3 border-t border-cp-border flex items-center justify-between text-[11px] cp-text-secondary">
                       <span>{item.status}</span>
                     </div>
                   </div>

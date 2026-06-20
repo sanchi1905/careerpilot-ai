@@ -31,7 +31,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0B0F19]">
+    <div className="flex flex-col min-h-screen cp-page">
       <Navbar />
 
       <main className="flex-grow">
@@ -39,13 +39,13 @@ export default function Home() {
         <Hero />
 
         {/* Features Section */}
-        <section className="py-16 border-t border-slate-900 bg-[#0A0D15]/40">
+        <section className="py-16 border-t border-cp-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl font-bold text-white sm:text-4xl">
+              <h2 className="text-3xl font-bold cp-text-primary sm:text-4xl">
                 Supercharge Your Career Preparation
               </h2>
-              <p className="mt-4 text-slate-400">
+              <p className="mt-4 cp-text-secondary">
                 Skip the spreadsheets and manual prep. Leverage AI built specifically to organize and boost your placement outcomes.
               </p>
             </div>

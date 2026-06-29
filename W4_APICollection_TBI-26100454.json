@@ -1,0 +1,278 @@
+{
+  "info": {
+    "_postman_id": "careerpilot-ai-week4",
+    "name": "CareerPilot AI – Week 4 API Collection",
+    "description": "REST API endpoints for the CareerPilot AI job application tracker. Built with Express.js running on port 5000.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "health"]
+        },
+        "description": "Verify the server is running and healthy."
+      },
+      "response": [
+        {
+          "name": "200 OK – Server Running",
+          "status": "OK",
+          "code": 200,
+          "body": "{\"status\":\"ok\",\"message\":\"CareerPilot API is running\",\"timestamp\":\"2026-06-29T07:00:00.000Z\"}"
+        }
+      ]
+    },
+    {
+      "name": "GET All Applications",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/applications",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "applications"]
+        },
+        "description": "Retrieve all job applications. Supports optional ?status= filter."
+      },
+      "response": [
+        {
+          "name": "200 OK – All Applications",
+          "status": "OK",
+          "code": 200,
+          "body": "{\"count\":6,\"data\":[{\"id\":\"1\",\"company\":\"Google\",\"role\":\"Software Engineering Intern\",\"location\":\"Remote\",\"status\":\"applied\",\"appliedDate\":\"2026-06-22\",\"notes\":\"Applied via company portal\",\"resumeScore\":85}]}"
+        }
+      ]
+    },
+    {
+      "name": "GET Applications by Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/applications?status=interviewing",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "applications"],
+          "query": [{ "key": "status", "value": "interviewing" }]
+        },
+        "description": "Filter applications by status: applied | interviewing | offer | rejected | withdrawn"
+      },
+      "response": [
+        {
+          "name": "200 OK – Filtered by Status",
+          "status": "OK",
+          "code": 200,
+          "body": "{\"count\":2,\"data\":[{\"id\":\"3\",\"company\":\"Meta\",\"role\":\"Product Engineering Intern\",\"location\":\"Menlo Park, CA\",\"status\":\"interviewing\",\"appliedDate\":\"2026-06-15\",\"notes\":\"Technical Round 2 scheduled\",\"resumeScore\":90}]}"
+        }
+      ]
+    },
+    {
+      "name": "GET Dashboard Stats",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/applications/stats",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "applications", "stats"]
+        },
+        "description": "Get aggregated statistics for the dashboard: totals, status counts, average resume score."
+      },
+      "response": [
+        {
+          "name": "200 OK – Stats",
+          "status": "OK",
+          "code": 200,
+          "body": "{\"total\":6,\"applied\":2,\"interviewing\":2,\"offers\":1,\"rejected\":1,\"avgResumeScore\":84}"
+        }
+      ]
+    },
+    {
+      "name": "GET Search Applications",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/applications/search?q=google",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "applications", "search"],
+          "query": [{ "key": "q", "value": "google" }]
+        },
+        "description": "Search applications by company name, role, or location (case-insensitive)."
+      },
+      "response": [
+        {
+          "name": "200 OK – Search Results",
+          "status": "OK",
+          "code": 200,
+          "body": "{\"count\":1,\"data\":[{\"id\":\"1\",\"company\":\"Google\",\"role\":\"Software Engineering Intern\",\"location\":\"Remote\",\"status\":\"applied\",\"appliedDate\":\"2026-06-22\",\"notes\":\"Applied via company portal\",\"resumeScore\":85}]}"
+        },
+        {
+          "name": "400 Bad Request – Missing q",
+          "status": "Bad Request",
+          "code": 400,
+          "body": "{\"error\":\"Query parameter \\\"q\\\" is required\"}"
+        }
+      ]
+    },
+    {
+      "name": "GET Single Application",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/applications/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "applications", "1"]
+        },
+        "description": "Get a single application by ID."
+      },
+      "response": [
+        {
+          "name": "200 OK – Application Found",
+          "status": "OK",
+          "code": 200,
+          "body": "{\"data\":{\"id\":\"1\",\"company\":\"Google\",\"role\":\"Software Engineering Intern\",\"location\":\"Remote\",\"status\":\"applied\",\"appliedDate\":\"2026-06-22\",\"notes\":\"Applied via company portal\",\"resumeScore\":85}}"
+        },
+        {
+          "name": "404 Not Found",
+          "status": "Not Found",
+          "code": 404,
+          "body": "{\"error\":\"Application with id \\\"999\\\" not found\"}"
+        }
+      ]
+    },
+    {
+      "name": "POST Create Application",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"company\": \"OpenAI\",\n  \"role\": \"AI Engineer Intern\",\n  \"location\": \"Remote\",\n  \"status\": \"applied\",\n  \"notes\": \"Applied via referral from alumni\",\n  \"resumeScore\": 88\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/applications",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "applications"]
+        },
+        "description": "Create a new job application. Required: company, role, location. Optional: status, notes, resumeScore."
+      },
+      "response": [
+        {
+          "name": "201 Created",
+          "status": "Created",
+          "code": 201,
+          "body": "{\"message\":\"Application created successfully\",\"data\":{\"id\":\"7\",\"company\":\"OpenAI\",\"role\":\"AI Engineer Intern\",\"location\":\"Remote\",\"status\":\"applied\",\"appliedDate\":\"2026-06-29\",\"notes\":\"Applied via referral from alumni\",\"resumeScore\":88}}"
+        },
+        {
+          "name": "400 Bad Request – Validation Error",
+          "status": "Bad Request",
+          "code": 400,
+          "body": "{\"error\":\"company is required\"}"
+        }
+      ]
+    },
+    {
+      "name": "PUT Update Application",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"company\": \"Google\",\n  \"role\": \"Software Engineering Intern\",\n  \"location\": \"Remote\",\n  \"status\": \"interviewing\",\n  \"notes\": \"Technical round 1 completed. Round 2 scheduled.\",\n  \"resumeScore\": 90\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/applications/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "applications", "1"]
+        },
+        "description": "Fully update an existing application by ID. All fields required."
+      },
+      "response": [
+        {
+          "name": "200 OK – Updated",
+          "status": "OK",
+          "code": 200,
+          "body": "{\"message\":\"Application updated successfully\",\"data\":{\"id\":\"1\",\"company\":\"Google\",\"role\":\"Software Engineering Intern\",\"location\":\"Remote\",\"status\":\"interviewing\",\"appliedDate\":\"2026-06-22\",\"notes\":\"Technical round 1 completed. Round 2 scheduled.\",\"resumeScore\":90}}"
+        }
+      ]
+    },
+    {
+      "name": "PATCH Update Status",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"offer\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/applications/2",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "applications", "2"]
+        },
+        "description": "Partially update an application (e.g., just the status field)."
+      },
+      "response": [
+        {
+          "name": "200 OK – Patched",
+          "status": "OK",
+          "code": 200,
+          "body": "{\"message\":\"Application patched successfully\",\"data\":{\"id\":\"2\",\"company\":\"Stripe\",\"role\":\"Frontend Engineer\",\"location\":\"San Francisco, CA\",\"status\":\"offer\",\"appliedDate\":\"2026-06-24\",\"notes\":\"Referred by alumni\",\"resumeScore\":78}}"
+        }
+      ]
+    },
+    {
+      "name": "DELETE Application",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/applications/6",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "applications", "6"]
+        },
+        "description": "Delete an application by ID. Returns 204 No Content on success."
+      },
+      "response": [
+        {
+          "name": "204 No Content – Deleted",
+          "status": "No Content",
+          "code": 204,
+          "body": ""
+        },
+        {
+          "name": "404 Not Found",
+          "status": "Not Found",
+          "code": 404,
+          "body": "{\"error\":\"Application with id \\\"6\\\" not found\"}"
+        }
+      ]
+    }
+  ]
+}

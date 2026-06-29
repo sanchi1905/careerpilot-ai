@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>W4_FrontendBackendConnection_TBI-26100454</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #1e293b;
+      background: #fff;
+      padding: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .header {
+      border-bottom: 3px solid #6366f1;
+      padding-bottom: 20px;
+      margin-bottom: 32px;
+    }
+    .header h1 { font-size: 24px; color: #4f46e5; font-weight: 700; }
+    .header p { font-size: 14px; color: #64748b; margin-top: 4px; }
+    .badge {
+      display: inline-block;
+      background: #eef2ff;
+      color: #4f46e5;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-top: 8px;
+      border: 1px solid #c7d2fe;
+    }
+    .section { margin-bottom: 40px; }
+    .section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .section p { font-size: 14px; color: #475569; margin-bottom: 12px; }
+    .screenshot {
+      width: 100%;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin: 12px 0 8px;
+    }
+    .caption {
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .endpoints-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+    .endpoints-table th {
+      background: #f1f5f9;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      color: #374151;
+      border: 1px solid #e2e8f0;
+    }
+    .endpoints-table td {
+      padding: 9px 14px;
+      border: 1px solid #e2e8f0;
+      font-family: monospace;
+      font-size: 12px;
+      color: #1e293b;
+    }
+    .endpoints-table tr:nth-child(even) td { background: #f8fafc; }
+    .method { font-weight: 700; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
+    .get { background:#dcfce7; color:#15803d; }
+    .post { background:#dbeafe; color:#1d4ed8; }
+    .put { background:#fef9c3; color:#92400e; }
+    .patch { background:#ede9fe; color:#6d28d9; }
+    .delete { background:#fee2e2; color:#b91c1c; }
+    .info-box {
+      background: #f0f9ff;
+      border-left: 4px solid #0ea5e9;
+      padding: 14px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 12px 0;
+    }
+    .info-box p { font-size: 13px; color: #0c4a6e; margin: 0; }
+    .info-box strong { color: #0369a1; }
+    .tech-list { list-style: none; padding: 0; }
+    .tech-list li {
+      font-size: 13px;
+      color: #475569;
+      padding: 5px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .tech-list li strong { color: #1e293b; }
+    .footer {
+      margin-top: 50px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 16px;
+      font-size: 12px;
+      color: #94a3b8;
+      text-align: center;
+    }
+    @media print {
+      body { padding: 20px; }
+      .screenshot { max-height: 400px; object-fit: contain; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>CareerPilot AI — Frontend ↔ Backend Connection Demo</h1>
+    <p>Week 4 Deliverable 3: Frontend Connected to Backend</p>
+    <span class="badge">TBI-26100454</span>
+    <span class="badge" style="margin-left:8px;">Submitted: 29 June 2026</span>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section">
+    <h2>1. Project Overview</h2>
+    <p>
+      CareerPilot AI is a full-stack web application that helps students track job and internship applications.
+      This week, an Express.js backend was built and the React frontend was fully connected to it via REST API calls.
+      The frontend now fetches <strong>live data</strong> from the backend instead of using hardcoded mock data.
+    </p>
+
+    <div class="info-box">
+      <p><strong>Backend:</strong> Node.js + Express.js — running on <code>http://localhost:5000</code></p>
+      <p><strong>Frontend:</strong> React + Vite — running on <code>http://localhost:5173</code></p>
+      <p><strong>Data:</strong> In-memory array (Week 4) — database integration planned for Week 5</p>
+    </div>
+
+    <ul class="tech-list">
+      <li><strong>Framework:</strong> Express.js v4.19</li>
+      <li><strong>CORS:</strong> Configured to allow frontend origin <code>http://localhost:5173</code></li>
+      <li><strong>Error Handling:</strong> Global error middleware + 404 handler</li>
+      <li><strong>Validation:</strong> Input validation on POST/PUT with 400 responses</li>
+      <li><strong>State Management:</strong> Loading states via Loader component, errors via Toast notifications</li>
+    </ul>
+  </div>
+
+  <!-- API ENDPOINTS -->
+  <div class="section">
+    <h2>2. REST API Endpoints (8 Total)</h2>
+    <table class="endpoints-table">
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Endpoint</th>
+          <th>Description</th>
+          <th>Status Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="method get">GET</span></td>
+          <td>/api/health</td>
+          <td>Health check — server status &amp; timestamp</td>
+          <td>200</td>
+        </tr>
+        <tr>
+          <td><span class="method get">GET</span></td>
+          <td>/api/applications</td>
+          <td>List all applications (optional ?status= filter)</td>
+          <td>200</td>
+        </tr>
+        <tr>
+          <td><span class="method get">GET</span></td>
+          <td>/api/applications/stats</td>
+          <td>Dashboard statistics (totals, counts, avg score)</td>
+          <td>200</td>
+        </tr>
+        <tr>
+          <td><span class="method get">GET</span></td>
+          <td>/api/applications/search?q=</td>
+          <td>Search by company, role, or location</td>
+          <td>200 / 400</td>
+        </tr>
+        <tr>
+          <td><span class="method get">GET</span></td>
+          <td>/api/applications/:id</td>
+          <td>Get a single application by ID</td>
+          <td>200 / 404</td>
+        </tr>
+        <tr>
+          <td><span class="method post">POST</span></td>
+          <td>/api/applications</td>
+          <td>Create a new application</td>
+          <td>201 / 400</td>
+        </tr>
+        <tr>
+          <td><span class="method put">PUT</span></td>
+          <td>/api/applications/:id</td>
+          <td>Fully update an application</td>
+          <td>200 / 404 / 400</td>
+        </tr>
+        <tr>
+          <td><span class="method patch">PATCH</span></td>
+          <td>/api/applications/:id</td>
+          <td>Partially update (e.g., status only)</td>
+          <td>200 / 404</td>
+        </tr>
+        <tr>
+          <td><span class="method delete">DELETE</span></td>
+          <td>/api/applications/:id</td>
+          <td>Delete an application</td>
+          <td>204 / 404</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SCREENSHOT 1 -->
+  <div class="section">
+    <h2>3. Screenshot 1 — Live Dashboard with API Data</h2>
+    <p>
+      The Application Dashboard now fetches real-time data from the Express backend.
+      Stats cards (Total Applications, Interviews Scheduled, Offers Received, Avg Resume Score) are 
+      populated from <code>GET /api/applications/stats</code>.
+      The Kanban board columns (Applied, Interviewing, Offer) are populated from <code>GET /api/applications</code>.
+      The green "Live API" badge in the top-right confirms the backend connection is active.
+    </p>
+    <img class="screenshot" src="dashboard_overview.png" alt="CareerPilot Dashboard with live API data" />
+    <p class="caption">
+      Figure 1: Application Dashboard showing live data fetched from <code>http://localhost:5000/api/applications</code> and 
+      <code>/api/applications/stats</code>. Stats show 6 total applications, 3 in interviews, 2 offers, 87% avg resume score.
+    </p>
+  </div>
+
+  <!-- SCREENSHOT 2 -->
+  <div class="section">
+    <h2>4. Screenshot 2 — Add Application Modal (POST /api/applications)</h2>
+    <p>
+      Clicking the "+ Add Application" button opens a modal form. On submit, the form sends a 
+      <code>POST /api/applications</code> request to the backend with JSON body. The backend validates 
+      the input, returns <code>201 Created</code> with the new application, and the frontend refreshes 
+      the board with a success Toast notification.
+    </p>
+    <img class="screenshot" src="add_application_modal.png" alt="Add Application modal form" />
+    <p class="caption">
+      Figure 2: Add New Application modal — submits to <code>POST http://localhost:5000/api/applications</code>.
+      Fields: Company, Role, Location, Resume Score (0–100), Status dropdown, Notes.
+      Loading states are shown during API call; errors display as Toast notifications.
+    </p>
+  </div>
+
+  <!-- SCREENSHOT 3 -->
+  <div class="section">
+    <h2>5. Screenshot 3 — Network Tab Showing Successful API Calls</h2>
+    <p>
+      The Chrome DevTools Network tab confirms the frontend is making successful API calls to the Express backend.
+      When the dashboard loads, two requests are fired in parallel:
+    </p>
+    <ul style="margin: 8px 0 12px 20px; font-size: 13px; color: #475569;">
+      <li><code>GET http://localhost:5000/api/applications</code> → <strong>200 OK</strong></li>
+      <li><code>GET http://localhost:5000/api/applications/stats</code> → <strong>200 OK</strong></li>
+    </ul>
+    <img class="screenshot" src="network_tab.png" alt="Chrome DevTools Network tab showing API calls" />
+    <p class="caption">
+      Figure 3: Chrome DevTools Network tab showing successful API calls from frontend to backend.
+      Both <code>/api/applications</code> and <code>/api/applications/stats</code> return HTTP 200 status.
+    </p>
+  </div>
+
+  <!-- TECHNICAL IMPLEMENTATION -->
+  <div class="section">
+    <h2>6. Frontend Implementation Details</h2>
+    <p>The Dashboard component (<code>src/pages/Dashboard.jsx</code>) was rewritten to:</p>
+    <ul style="margin: 8px 0 12px 20px; font-size: 13px; color: #475569;">
+      <li>Use <code>useEffect</code> to fetch from <code>/api/applications</code> and <code>/api/applications/stats</code> on mount</li>
+      <li>Show <strong>Loader</strong> component (spinner/skeleton) while fetching data</li>
+      <li>Show <strong>Toast</strong> error notifications on fetch failures</li>
+      <li>Support <strong>Create</strong> (POST), <strong>Edit</strong> (PUT), <strong>Delete</strong> (DELETE) via modal and action buttons</li>
+      <li>Live <strong>Search</strong> via <code>GET /api/applications/search?q=</code></li>
+      <li>Refresh button to re-fetch data on demand</li>
+    </ul>
+
+    <div class="info-box">
+      <p><strong>CORS Configuration:</strong> Backend allows origin <code>http://localhost:5173</code> via the <code>cors</code> npm package. 
+      Methods allowed: GET, POST, PUT, PATCH, DELETE.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>CareerPilot AI &mdash; Week 4 Submission &mdash; Intern ID: TBI-26100454 &mdash; AI-Assisted Full Stack Web Development</p>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+
+--- PAGE 1 ---
+AI – ASSISTED FULL STACK WEB DEVELOPMENT
+Week 4 — Backend & API Development
+1. Overview of the Week
+This week you build the engine room of your app. You will set up a backend server using Express.js (Node) or
+FastAPI (Python), design and implement at least 6 REST API endpoints, test every endpoint in Postman or Thunder
+Client, and connect your frontend to the backend so real data flows between them. By the end of this week, your app is
+no longer static — it is a full-stack app with live data.
+2. What You Will Do This Week
+ Initialise the backend:
+o Node/Express path: Create /backend folder, npm init -y, install express, cors, dotenv, nodemon.
+Create a basic server in server.js listening on port 5000.
+o Python/FastAPI path: Create /backend, set up a virtual environment (python -m venv venv), install
+fastapi, uvicorn, python-dotenv. Create a basic app in main.py.
+ Design 6+ REST endpoints around your core data model. Example for a task manager app:
+o GET /api/tasks — list all tasks
+o GET /api/tasks/:id — get a single task
+o POST /api/tasks — create a task
+o PUT /api/tasks/:id — update a task
+o DELETE /api/tasks/:id — delete a task
+o GET /api/tasks/search?q=… — search tasks
+ Use proper HTTP methods and status codes: 200 for successful GET/PUT, 201 for POST create, 204 for
+DELETE, 400 for validation errors, 404 for not found, 500 for server errors.
+ Add basic error handling middleware (Express) or exception handlers (FastAPI).
+ Use in-memory data for now — a simple array or dictionary. Real database comes in Week 5.
+ Test every endpoint in Postman or Thunder Client: create a collection with 6+ requests covering each
+endpoint. Export the collection as a JSON file.
+ Connect frontend to backend: Replace all hardcoded/mock data in your frontend with real API calls using
+fetch or axios. Handle loading states (show your Loader component) and error states (show a Toast).
+Configure CORS on the backend to allow your frontend origin.
+3. Learning Outcomes for the Week
+Week Outcome Mapped to CLO
+Set up a backend server with Express or FastAPI and clean project structure CLO-2
+Design and implement 6+ REST endpoints with correct HTTP methods and status codes CLO-2
+Test every endpoint using Postman or Thunder Client with documented results CLO-2
+Connect the frontend to the backend with live API calls, loading, and error states CLO-1, CLO-2
+--- PAGE 2 ---
+AI – ASSISTED FULL STACK WEB DEVELOPMENT
+4. Resources
+4.1 YouTube Videos
+# Title / Content Channel & Link
+1 Node.js and Express for Beginners freeCodeCamp —
+https://www.youtube.com/watch?v=Oe421EPjeBE
+2 Build a REST API with Node.js, Express, Traversy Media —
+and MongoDB https://www.youtube.com/watch?v=fgTGADljAeg
+3 FastAPI Course for Beginners freeCodeCamp —
+https://www.youtube.com/watch?v=tLKKmouUams
+4 What Is REST API? Explained in 100 Fireship — https://www.youtube.com/watch?v=-MTSQjw5DrM
+Seconds
+5 Postman Tutorial — Full Beginner Guide Traversy Media —
+https://www.youtube.com/watch?v=VywxIQ2ZXw4
+6 Thunder Client — Lightweight API Ahmad Awais —
+Tester https://www.youtube.com/watch?v=AbCTlemwZ1k
+7 CORS in 100 Seconds Fireship — https://www.youtube.com/watch?v=4KHiSt0oLJ0
+8 Fetch API Tutorial for Beginners The Net Ninja — https://www.youtube.com/watch?v=cuEtnrL9-
+H0
+9 Express Middleware Explained Web Dev Simplified —
+https://www.youtube.com/watch?v=lY6icfhap2o
+10 HTTP Status Codes Explained Web Dev Simplified —
+https://www.youtube.com/watch?v=5b9nx_w-B2s
+4.2 Blogs and Articles
+# Title Source & Link
+1 Express.js Getting Started Express Official — https://expressjs.com/en/starter/installing.html
+Guide
+2 FastAPI Tutorial — First FastAPI Docs — https://fastapi.tiangolo.com/tutorial
+Steps
+3 REST API Design Best MDN Web Docs — https://developer.mozilla.org/en-US/docs/Glossary/REST
+Practices
+4 HTTP Status Codes MDN — https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+Reference
+5 Build a RESTful API with DigitalOcean Community —
+Node and Express https://www.digitalocean.com/community/tutorials/nodejs-express-routing
+6 Postman Learning Center Postman Docs — https://learning.postman.com
+7 CORS Explained Simply MDN Web Docs — https://developer.mozilla.org/en-
+US/docs/Web/HTTP/CORS
+8 Error Handling in Express Express Docs — https://expressjs.com/en/guide/error-handling.html
+9 Axios vs Fetch — Which to LogRocket Blog — https://blog.logrocket.com/axios-vs-fetch-best-http-requests
+Use
+10 REST API Naming REST API Tutorial — https://restfulapi.net/resource-naming
+Conventions
+4.3 MOOCs / Courses
+# Course Platform & Link
+1 Back End Development and APIs freeCodeCamp (Free) — https://www.freecodecamp.org/learn/back-end-
+Certification development-and-apis
+2 Full Stack Open — Part 3 (Node University of Helsinki (Free) — https://fullstackopen.com/en/part3
+& Express)
+3 APIs Coursera (Meta) — https://www.coursera.org/learn/apis
+4 FastAPI — The Complete Course FastAPI Official Learning Resources — https://fastapi.tiangolo.com/learn
+--- PAGE 3 ---
+AI – ASSISTED FULL STACK WEB DEVELOPMENT
+5. Deliverables
+Deliverable 1: Working REST API in GitHub Repo
+ Backend folder in your GitHub repo with a clean structure.
+ Minimum 6 working endpoints covering CRUD (GET list, GET single, POST, PUT/PATCH, DELETE) plus
+at least one additional endpoint (search, filter, or similar).
+ Each endpoint must return correct HTTP status codes and JSON responses.
+ Error handling middleware/exception handlers in place.
+ .env file exists but is gitignored; a .env.example file shows required env variable names.
+ README updated with a "How to run backend locally" section.
+Deliverable 2: Postman/Thunder Client Collection Export
+ Export your API testing collection as a JSON file.
+ Collection must include one request per endpoint (minimum 6).
+ Each request must have a saved example response.
+ File name: W4_APICollection_[InternID].json
+Deliverable 3: Frontend Connected to Backend — Demo Screenshot PDF
+ 2–3 screenshots showing the frontend displaying data from the backend.
+ One screenshot of the Network tab in Chrome DevTools showing successful API calls (status 200).
+ Add brief captions under each screenshot.
+ File name: W4_FrontendBackendConnection_[InternID].pdf
+6. Submission Instructions
+ Submit W4_APICollection_[InternID].json and W4_FrontendBackendConnection_[InternID].pdf via the
+TBI-GEU LMS Assignment box for Week 4.
+ Submit the GitHub repo URL (showing both frontend and backend code) in the assignment link field.
+ Submit the Weekly Progress Report via the TBI-GEU LMS Form by Sunday 11:59 PM IST.

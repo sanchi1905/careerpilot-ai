@@ -16,7 +16,7 @@ def zipdir(path, ziph):
             ziph.write(filepath, arcname)
 
 if __name__ == '__main__':
-    zip_path = 'W7_Submission_TBI-26100454.zip'
+    zip_path = 'W8_Submission_TBI-26100454.zip'
 
     with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
         zipdir('.', zipf)

@@ -571,6 +571,8 @@ export default function Dashboard() {
             </form>
           </div>
         </div>
+      )}
+      
       {/* ── AI Prep Modal ────────────────────────────────────────────────────── */}
       {showAiModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>W5_SchemaDiagram_TBI-26100454</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #1e293b;
+      background: #fff;
+      padding: 40px;
+      max-width: 960px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .header {
+      border-bottom: 3px solid #6366f1;
+      padding-bottom: 20px;
+      margin-bottom: 32px;
+    }
+    .header h1 { font-size: 24px; color: #4f46e5; font-weight: 700; }
+    .header p { font-size: 14px; color: #64748b; margin-top: 4px; }
+    .badge {
+      display: inline-block;
+      background: #eef2ff;
+      color: #4f46e5;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-top: 8px;
+      border: 1px solid #c7d2fe;
+    }
+    .section { margin-bottom: 40px; }
+    .section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .section p { font-size: 14px; color: #475569; margin-bottom: 12px; }
+    .info-box {
+      background: #f0f9ff;
+      border-left: 4px solid #0ea5e9;
+      padding: 14px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 12px 0;
+    }
+    .info-box p { font-size: 13px; color: #0c4a6e; margin: 0 0 6px; }
+    .info-box p:last-child { margin-bottom: 0; }
+
+    /* Schema Diagram Table */
+    .schema-diagram {
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 0;
+      margin: 20px 0;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+    .schema-header {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .schema-header .db-icon {
+      width: 36px;
+      height: 36px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .schema-header h3 { color: #fff; font-size: 16px; margin: 0; }
+    .schema-header span { color: rgba(255,255,255,0.7); font-size: 12px; }
+    .schema-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .fields-panel {
+      padding: 20px 24px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .fields-panel h4 { color: #94a3b8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .field-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 13px;
+    }
+    .field-row:last-child { border-bottom: none; }
+    .field-name { color: #e2e8f0; font-family: 'Courier New', monospace; flex: 0 0 120px; }
+    .field-type { color: #f59e0b; font-family: monospace; font-size: 11px; flex: 0 0 80px; }
+    .field-flag {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .required { background: #166534; color: #4ade80; }
+    .optional { background: #1e3a5f; color: #60a5fa; }
+    .auto { background: #3b1f6b; color: #c084fc; }
+    .pk { background: #7c2d12; color: #fb923c; }
+    .example-panel {
+      padding: 20px 24px;
+    }
+    .example-panel h4 { color: #94a3b8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .json-example {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .json-key { color: #93c5fd; }
+    .json-string { color: #86efac; }
+    .json-number { color: #fcd34d; }
+    .json-id { color: #f9a8d4; }
+    .json-bracket { color: #94a3b8; }
+    .schema-footer {
+      padding: 12px 24px;
+      background: rgba(255,255,255,0.04);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    /* Entity Relationships Box */
+    .entity-box {
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .entity-title {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .entity-fields table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .entity-fields th {
+      background: #f8fafc;
+      padding: 8px 12px;
+      text-align: left;
+      color: #374151;
+      font-weight: 600;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .entity-fields td {
+      padding: 7px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #475569;
+      font-family: monospace;
+      font-size: 12px;
+    }
+    .entity-fields tr:last-child td { border-bottom: none; }
+    .entity-fields tr:hover td { background: #fafafa; }
+    td.field-col { color: #4f46e5; font-weight: 600; }
+    td.type-col { color: #d97706; }
+    td.req-col { text-align: center; }
+    .req-yes { color: #16a34a; font-weight: bold; }
+    .req-no { color: #94a3b8; }
+    .desc-col { color: #64748b; font-family: 'Segoe UI', sans-serif; font-size: 12px; }
+
+    .rationale-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .rationale-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
+    .rationale-card h4 { font-size: 13px; color: #4f46e5; margin-bottom: 6px; }
+    .rationale-card p { font-size: 12px; color: #64748b; margin: 0; }
+
+    .footer {
+      margin-top: 50px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 16px;
+      font-size: 12px;
+      color: #94a3b8;
+      text-align: center;
+    }
+    code {
+      background: #f1f5f9;
+      color: #4f46e5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: 'Courier New', monospace;
+    }
+    @media print {
+      body { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>CareerPilot AI — Database Schema Diagram</h1>
+    <p>Week 5 Deliverable 2: Schema Design &amp; MongoDB Integration</p>
+    <span class="badge">TBI-26100454</span>
+    <span class="badge" style="margin-left:8px;">Submitted: July 2026</span>
+    <span class="badge" style="margin-left:8px; background:#dcfce7; color:#15803d; border-color:#86efac;">MongoDB + Mongoose</span>
+  </div>
+
+  <!-- DATABASE CHOICE -->
+  <div class="section">
+    <h2>1. Database Choice</h2>
+    <p>
+      For CareerPilot AI, <strong>MongoDB Atlas</strong> (free M0 tier) was selected as the cloud database,
+      integrated via the <strong>Mongoose ODM</strong> (Object Document Mapper).
+    </p>
+    <div class="info-box">
+      <p><strong>Database:</strong> MongoDB Atlas (M0 Free Tier)</p>
+      <p><strong>ODM:</strong> Mongoose v8.x — schema validation, middleware, query builder</p>
+      <p><strong>Collection:</strong> <code>applications</code> — one document per job application</p>
+      <p><strong>Connection:</strong> Via <code>MONGO_URI</code> in <code>.env</code> (never committed to git)</p>
+    </div>
+
+    <div class="rationale-grid">
+      <div class="rationale-card">
+        <h4>🗂️ Flexible Document Model</h4>
+        <p>Application records have optional fields (notes, resumeScore). MongoDB's document model handles missing fields gracefully — no NULL columns needed.</p>
+      </div>
+      <div class="rationale-card">
+        <h4>⚡ JSON-Native Pipeline</h4>
+        <p>REST API exchanges JSON. MongoDB stores BSON (binary JSON) — seamless flow from React frontend → Express → MongoDB.</p>
+      </div>
+      <div class="rationale-card">
+        <h4>☁️ Free Cloud Hosting</h4>
+        <p>MongoDB Atlas M0 cluster is free forever with 512MB storage — perfect for this internship project without any cost.</p>
+      </div>
+      <div class="rationale-card">
+        <h4>🔧 Mongoose ODM Benefits</h4>
+        <p>Schema validation, default values, enum constraints, and automatic timestamps — brings structure to MongoDB's flexibility.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE SCHEMA DIAGRAM -->
+  <div class="section">
+    <h2>2. Schema Diagram</h2>
+    <p>The CareerPilot AI database uses a <strong>single-collection document model</strong> with one entity: <code>Application</code>. Each document represents one job/internship application.</p>
+
+    <!-- Visual Schema Box -->
+    <div class="schema-diagram">
+      <div class="schema-header">
+        <div class="db-icon">🍃</div>
+        <div>
+          <h3>Application</h3>
+          <span>MongoDB Collection — careerpilot.applications</span>
+        </div>
+      </div>
+      <div class="schema-body">
+        <div class="fields-panel">
+          <h4>Fields &amp; Types</h4>
+          <div class="field-row">
+            <span class="field-name">_id</span>
+            <span class="field-type">ObjectId</span>
+            <span class="field-flag pk">PK</span>
+            <span class="field-flag auto">auto</span>
+          </div>
+          <div class="field-row">
+            <span class="field-name">company</span>
+            <span class="field-type">String</span>
+            <span class="field-flag required">required</span>
+          </div>
+          <div class="field-row">
+            <span class="field-name">role</span>
+            <span class="field-type">String</span>
+            <span class="field-flag required">required</span>
+          </div>
+          <div class="field-row">
+            <span class="field-name">location</span>
+            <span class="field-type">String</span>
+            <span class="field-flag required">required</span>
+          </div>
+          <div class="field-row">
+            <span class="field-name">status</span>
+            <span class="field-type">Enum</span>
+            <span class="field-flag required">required</span>
+          </div>
+          <div class="field-row">
+            <span class="field-name">appliedDate</span>
+            <span class="field-type">String</span>
+            <span class="field-flag required">required</span>
+          </div>
+          <div class="field-row">
+            <span class="field-name">notes</span>
+            <span class="field-type">String</span>
+            <span class="field-flag optional">optional</span>
+          </div>
+          <div class="field-row">
+            <span class="field-name">resumeScore</span>
+            <span class="field-type">Number</span>
+            <span class="field-flag optional">optional</span>
+          </div>
+          <div class="field-row">
+            <span class="field-name">createdAt</span>
+            <span class="field-type">Date</span>
+            <span class="field-flag auto">auto</span>
+          </div>
+          <div class="field-row">
+            <span class="field-name">updatedAt</span>
+            <span class="field-type">Date</span>
+            <span class="field-flag auto">auto</span>
+          </div>
+        </div>
+        <div class="example-panel">
+          <h4>Sample Document (JSON)</h4>
+          <div class="json-example">
+            <span class="json-bracket">{</span><br>
+            &nbsp;&nbsp;<span class="json-key">"_id"</span>: <span class="json-id">"ObjectId(...)"</span>,<br>
+            &nbsp;&nbsp;<span class="json-key">"company"</span>: <span class="json-string">"Google"</span>,<br>
+            &nbsp;&nbsp;<span class="json-key">"role"</span>: <span class="json-string">"SWE Intern"</span>,<br>
+            &nbsp;&nbsp;<span class="json-key">"location"</span>: <span class="json-string">"Remote"</span>,<br>
+            &nbsp;&nbsp;<span class="json-key">"status"</span>: <span class="json-string">"applied"</span>,<br>
+            &nbsp;&nbsp;<span class="json-key">"appliedDate"</span>: <span class="json-string">"2026-06-22"</span>,<br>
+            &nbsp;&nbsp;<span class="json-key">"notes"</span>: <span class="json-string">"Applied via portal"</span>,<br>
+            &nbsp;&nbsp;<span class="json-key">"resumeScore"</span>: <span class="json-number">85</span>,<br>
+            &nbsp;&nbsp;<span class="json-key">"createdAt"</span>: <span class="json-string">"2026-06-22T..."</span>,<br>
+            &nbsp;&nbsp;<span class="json-key">"updatedAt"</span>: <span class="json-string">"2026-06-22T..."</span><br>
+            <span class="json-bracket">}</span>
+          </div>
+        </div>
+      </div>
+      <div class="schema-footer">
+        ✅ Single-collection document model — flexible schema via Mongoose ODM &nbsp;|&nbsp;
+        Status enum: applied • interviewing • offer • rejected • withdrawn
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAILED FIELD TABLE -->
+  <div class="section">
+    <h2>3. Field Details</h2>
+    <div class="entity-box">
+      <div class="entity-title">📁 Application — MongoDB Document Schema (Mongoose)</div>
+      <div class="entity-fields">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Type</th>
+              <th>Required</th>
+              <th>Default / Constraint</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="field-col">_id</td>
+              <td class="type-col">ObjectId</td>
+              <td class="req-col"><span class="req-yes">✅</span></td>
+              <td>Auto-generated by MongoDB</td>
+              <td class="desc-col">Primary key — unique identifier for each document</td>
+            </tr>
+            <tr>
+              <td class="field-col">company</td>
+              <td class="type-col">String</td>
+              <td class="req-col"><span class="req-yes">✅</span></td>
+              <td>trim: true</td>
+              <td class="desc-col">Company name (e.g., "Google", "Microsoft")</td>
+            </tr>
+            <tr>
+              <td class="field-col">role</td>
+              <td class="type-col">String</td>
+              <td class="req-col"><span class="req-yes">✅</span></td>
+              <td>trim: true</td>
+              <td class="desc-col">Job title / role applied for</td>
+            </tr>
+            <tr>
+              <td class="field-col">location</td>
+              <td class="type-col">String</td>
+              <td class="req-col"><span class="req-yes">✅</span></td>
+              <td>trim: true</td>
+              <td class="desc-col">Work location (city, state, or "Remote")</td>
+            </tr>
+            <tr>
+              <td class="field-col">status</td>
+              <td class="type-col">Enum</td>
+              <td class="req-col"><span class="req-yes">✅</span></td>
+              <td>default: "applied"</td>
+              <td class="desc-col">Current application status — one of 5 enum values</td>
+            </tr>
+            <tr>
+              <td class="field-col">appliedDate</td>
+              <td class="type-col">String</td>
+              <td class="req-col"><span class="req-yes">✅</span></td>
+              <td>default: today's date</td>
+              <td class="desc-col">Date of application submission (YYYY-MM-DD format)</td>
+            </tr>
+            <tr>
+              <td class="field-col">notes</td>
+              <td class="type-col">String</td>
+              <td class="req-col"><span class="req-no">—</span></td>
+              <td>default: ""</td>
+              <td class="desc-col">Optional notes (referrals, interview details, etc.)</td>
+            </tr>
+            <tr>
+              <td class="field-col">resumeScore</td>
+              <td class="type-col">Number</td>
+              <td class="req-col"><span class="req-no">—</span></td>
+              <td>default: 0, min: 0, max: 100</td>
+              <td class="desc-col">AI-calculated resume match score (0–100)</td>
+            </tr>
+            <tr>
+              <td class="field-col">createdAt</td>
+              <td class="type-col">Date</td>
+              <td class="req-col"><span class="req-yes">✅</span></td>
+              <td>Auto — Mongoose timestamps</td>
+              <td class="desc-col">Document creation timestamp</td>
+            </tr>
+            <tr>
+              <td class="field-col">updatedAt</td>
+              <td class="type-col">Date</td>
+              <td class="req-col"><span class="req-yes">✅</span></td>
+              <td>Auto — Mongoose timestamps</td>
+              <td class="desc-col">Last update timestamp (auto-updated on save)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONGOOSE MODEL CODE -->
+  <div class="section">
+    <h2>4. Mongoose Model (models/Application.js)</h2>
+    <p>The model file is committed in the repository under <code>backend/models/Application.js</code>:</p>
+    <div style="background:#0f172a; border-radius:10px; padding:20px 24px; font-family:'Courier New', monospace; font-size:12px; line-height:1.8; overflow-x:auto; margin:12px 0;">
+      <span style="color:#64748b;">const</span> <span style="color:#93c5fd;">mongoose</span> <span style="color:#64748b;">=</span> <span style="color:#86efac;">require</span>(<span style="color:#fbbf24;">'mongoose'</span>);<br><br>
+      <span style="color:#64748b;">const</span> <span style="color:#93c5fd;">applicationSchema</span> <span style="color:#64748b;">=</span> <span style="color:#64748b;">new</span> <span style="color:#93c5fd;">mongoose</span>.<span style="color:#86efac;">Schema</span>(<br>
+      &nbsp;&nbsp;<span style="color:#e2e8f0;">{</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fbbf24;">company</span>: <span style="color:#e2e8f0;">{ type: String, required: true, trim: true }</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fbbf24;">role</span>: <span style="color:#e2e8f0;">{ type: String, required: true, trim: true }</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fbbf24;">location</span>: <span style="color:#e2e8f0;">{ type: String, required: true, trim: true }</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fbbf24;">status</span>: <span style="color:#e2e8f0;">{ type: String, enum: [<span style="color:#86efac;">'applied', 'interviewing', 'offer', 'rejected', 'withdrawn'</span>], default: <span style="color:#86efac;">'applied'</span> }</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fbbf24;">appliedDate</span>: <span style="color:#e2e8f0;">{ type: String, default: () =&gt; new Date().toISOString().split(<span style="color:#86efac;">'T'</span>)[0] }</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fbbf24;">notes</span>: <span style="color:#e2e8f0;">{ type: String, default: <span style="color:#86efac;">''</span>, trim: true }</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fbbf24;">resumeScore</span>: <span style="color:#e2e8f0;">{ type: Number, default: 0, min: 0, max: 100 }</span>,<br>
+      &nbsp;&nbsp;<span style="color:#e2e8f0;">},</span><br>
+      &nbsp;&nbsp;<span style="color:#e2e8f0;">{ timestamps: true }</span><br>
+      <span style="color:#e2e8f0;">);</span><br><br>
+      <span style="color:#64748b;">module.exports</span> <span style="color:#64748b;">=</span> <span style="color:#93c5fd;">mongoose</span>.<span style="color:#86efac;">model</span>(<span style="color:#fbbf24;">'Application'</span>, <span style="color:#93c5fd;">applicationSchema</span>);
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>CareerPilot AI &mdash; Week 5 Schema Diagram &mdash; Intern ID: TBI-26100454 &mdash; AI-Assisted Full Stack Web Development</p>
+  </div>
+
+</body>
+</html>

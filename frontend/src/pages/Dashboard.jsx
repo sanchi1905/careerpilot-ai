@@ -3,7 +3,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Loader from '../components/ui/Loader';
 import { useToast } from '../components/ui/Toast';
-import { Briefcase, CheckCircle, Clock, FileText, Plus, Search, X, Pencil, Trash2, RefreshCw } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { Briefcase, CheckCircle, Clock, FileText, Plus, Search, X, Pencil, Trash2, RefreshCw, Sparkles, Bot } from 'lucide-react';
 
 const API_BASE = 'http://localhost:5000/api';
 
@@ -28,6 +29,7 @@ const EMPTY_FORM = {
 
 export default function Dashboard() {
   const { addToast } = useToast();
+  const { token } = useAuth();
 
   // ── State ──────────────────────────────────────────────────────────────────
   const [applications, setApplications] = useState([]);
@@ -45,11 +47,45 @@ export default function Dashboard() {
   const [submitting, setSubmitting] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
 
+  // AI Modal state
+  const [showAiModal, setShowAiModal] = useState(false);
+  const [activeAiApp, setActiveAiApp] = useState(null);
+  const [aiData, setAiData] = useState(null);
+  const [aiLoading, setAiLoading] = useState(false);
+
+  // ── AI Prep ──────────────────────────────────────────────────────────────────
+  const handleAiPrep = async (app) => {
+    setActiveAiApp(app);
+    setAiData(null);
+    setShowAiModal(true);
+    setAiLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/ai/prep`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ company: app.company, role: app.role }),
+      });
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || `HTTP ${res.status}`);
+      }
+      const json = await res.json();
+      setAiData(json);
+    } catch (err) {
+      addToast(`AI Prep failed: ${err.message}`, 'error');
+      setShowAiModal(false);
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
   // ── Fetch All Applications ─────────────────────────────────────────────────
   const fetchApplications = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/applications`);
+      const res = await fetch(`${API_BASE}/applications`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (!res.ok) throw new Error(`Server error: ${res.status}`);
       const json = await res.json();
       setApplications(json.data || []);
@@ -64,7 +100,9 @@ export default function Dashboard() {
   const fetchStats = useCallback(async () => {
     setStatsLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/applications/stats`);
+      const res = await fetch(`${API_BASE}/applications/stats`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (!res.ok) throw new Error(`Server error: ${res.status}`);
       const json = await res.json();
       setStats(json);
@@ -77,9 +115,11 @@ export default function Dashboard() {
 
   // ── Initial Load ───────────────────────────────────────────────────────────
   useEffect(() => {
-    fetchApplications();
-    fetchStats();
-  }, [fetchApplications, fetchStats]);
+    if (token) {
+      fetchApplications();
+      fetchStats();
+    }
+  }, [fetchApplications, fetchStats, token]);
 
   // ── Search ─────────────────────────────────────────────────────────────────
   const handleSearch = async (e) => {
@@ -90,7 +130,9 @@ export default function Dashboard() {
     }
     setSearching(true);
     try {
-      const res = await fetch(`${API_BASE}/applications/search?q=${encodeURIComponent(searchQuery)}`);
+      const res = await fetch(`${API_BASE}/applications/search?q=${encodeURIComponent(searchQuery)}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (!res.ok) throw new Error(`Search failed: ${res.status}`);
       const json = await res.json();
       setSearchResults(json.data || []);
@@ -147,13 +189,13 @@ export default function Dashboard() {
       if (editingApp) {
         res = await fetch(`${API_BASE}/applications/${editingApp.id}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
           body: JSON.stringify(payload),
         });
       } else {
         res = await fetch(`${API_BASE}/applications`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
           body: JSON.stringify(payload),
         });
       }
@@ -182,7 +224,10 @@ export default function Dashboard() {
     if (!window.confirm('Delete this application?')) return;
     setDeletingId(id);
     try {
-      const res = await fetch(`${API_BASE}/applications/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/applications/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (res.status !== 204 && !res.ok) {
         const errData = await res.json();
         throw new Error(errData.error || `HTTP ${res.status}`);
@@ -346,6 +391,13 @@ export default function Dashboard() {
                         </div>
                         <div className="flex gap-1 flex-shrink-0">
                           <button
+                            onClick={() => handleAiPrep(item)}
+                            className="p-1.5 rounded-lg hover:bg-violet-500/10 text-slate-500 hover:text-violet-400 transition-colors"
+                            title="AI Interview Prep"
+                          >
+                            <Sparkles className="h-3.5 w-3.5" />
+                          </button>
+                          <button
                             onClick={() => openEditModal(item)}
                             className="p-1.5 rounded-lg hover:bg-indigo-500/10 text-slate-500 hover:text-indigo-400 transition-colors"
                             title="Edit"
@@ -403,6 +455,9 @@ export default function Dashboard() {
                       <span className={`px-2 py-0.5 rounded-full border font-semibold text-[10px] ${STATUS_COLORS[item.status]}`}>
                         {item.status}
                       </span>
+                      <button onClick={() => handleAiPrep(item)} className="p-1.5 rounded-lg hover:bg-violet-500/10 text-slate-500 hover:text-violet-400 transition-colors" title="AI Interview Prep">
+                        <Sparkles className="h-3.5 w-3.5" />
+                      </button>
                       <button onClick={() => openEditModal(item)} className="p-1.5 rounded-lg hover:bg-indigo-500/10 text-slate-500 hover:text-indigo-400 transition-colors">
                         <Pencil className="h-3.5 w-3.5" />
                       </button>
@@ -514,6 +569,57 @@ export default function Dashboard() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      {/* ── AI Prep Modal ────────────────────────────────────────────────────── */}
+      {showAiModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => !aiLoading && setShowAiModal(false)} />
+          <div className="relative cp-card w-full max-w-xl p-8 rounded-2xl shadow-2xl z-10 max-h-[90vh] overflow-y-auto">
+            {!aiLoading && (
+              <button onClick={() => setShowAiModal(false)} className="absolute top-4 right-4 cp-text-secondary hover:cp-text-primary transition-colors">
+                <X className="h-5 w-5" />
+              </button>
+            )}
+
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 bg-violet-500/10 rounded-xl text-violet-400">
+                <Bot className="h-6 w-6" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold cp-text-primary">AI Interview Prep</h2>
+                <p className="text-xs cp-text-secondary">{activeAiApp?.role} at {activeAiApp?.company}</p>
+              </div>
+            </div>
+
+            {aiLoading ? (
+              <div className="flex flex-col items-center justify-center py-12">
+                <Loader size="lg" label="Generating personalized interview questions..." />
+              </div>
+            ) : aiData ? (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-sm font-bold text-violet-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <Sparkles className="h-4 w-4" /> Likely Questions
+                  </h3>
+                  <ul className="space-y-3">
+                    {aiData.questions?.map((q, idx) => (
+                      <li key={idx} className="p-4 bg-slate-800/50 rounded-xl text-sm cp-text-primary border border-slate-700/50">
+                        {q}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+                  <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Pro Tip</h3>
+                  <p className="text-sm cp-text-primary">{aiData.tip}</p>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-8 text-red-400">
+                <p>Failed to load AI response.</p>
+              </div>
+            )}
           </div>
         </div>
       )}

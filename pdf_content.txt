@@ -1,0 +1,152 @@
+﻿=== PAGE 1 ===
+AI-ASSISTED FULL STACK WEB DEVELOPMENT
+Week 5 ΓÇö Database Design & Management
+1. Overview of the Week
+Your app currently uses in-memory data ΓÇö which disappears on every server restart. This week you add a
+real database. You will choose between PostgreSQL (via Supabase free tier) or MongoDB (via MongoDB
+Atlas free tier), design your schema, integrate an ORM/ODM, and migrate all your endpoints to use the
+database for full CRUD operations.
+This week also includes the Month-1 Reflection Video ΓÇô mandatory for all.
+2. What You Will Do This Week
+ΓÇó Choose your database:
+o PostgreSQL (via Supabase): recommended if your data is structured with clear relationships (users,
+posts, comments).
+o MongoDB (via Atlas): recommended if your data is document-based with flexible schema (blog
+posts with variable fields, chat messages, etc.).
+ΓÇó Set up the database:
+o Supabase: go to supabase.com, create a free project, get the database URL from Project Settings ΓåÆ
+Database ΓåÆ Connection String.
+o MongoDB Atlas: go to mongodb.com/cloud/atlas, create a free cluster (M0 tier), whitelist your IP,
+create a database user, and get the connection string.
+ΓÇó Design your schema/data model: identify 2ΓÇô3 entities (e.g., User, Task, Category), their fields,
+types, and relationships. Draw this as a simple diagram (Excalidraw, draw.io, or even hand-drawn +
+photo) and add it to your README.
+ΓÇó Integrate an ORM or ODM:
+o PostgreSQL + Prisma: npm install prisma @prisma/client, run npx prisma init, write schema
+in schema.prisma, run npx prisma migrate dev to create tables.
+o MongoDB + Mongoose: npm install mongoose, create model files with schemas, connect via
+mongoose in your server.
+ΓÇó Refactor all 6+ endpoints from Week 4 to use the database instead of in-memory data.
+ΓÇó Verify full CRUD end-to-end: open your frontend, create a record, see it appear, refresh the page ΓÇö
+the data should persist. Update the record, delete it, etc.
+ΓÇó Store environment variables safely: database URL in .env, never committed.
+
+=== PAGE 2 ===
+AI-ASSISTED FULL STACK WEB DEVELOPMENT
+ΓÇó Record Month-1 Reflection Video (5ΓÇô7 min): what you built in Weeks 1ΓÇô4, one big technical
+challenge and how you solved it, goals for Weeks 5ΓÇô9. Upload to YouTube as Unlisted. Submit the
+link via the Deliverables Submission form.
+3. Learning Outcomes for the Week
+Week Outcome Mapped to
+CLO
+Design a database schema with clear entities and relationships CLO-3
+Integrate an ORM (Prisma) or ODM (Mongoose) with a cloud-hosted CLO-3
+database
+Refactor API endpoints to use persistent database storage CLO-2, CLO-
+3
+Complete mid-program reflection on technical progress CLO-8
+4. Resources
+4.1 YouTube Videos
+# Title / Content Channel & Link
+1 SQL Tutorial ΓÇö Full freeCodeCamp ΓÇö https://www.youtube.com/watch?v=HXV3zeQKqGY
+Course for Beginners
+2 MongoDB in 100 Fireship ΓÇö https://www.youtube.com/watch?v=-bt_y4Loofg
+Seconds
+3 PostgreSQL in 100 Fireship ΓÇö https://www.youtube.com/watch?v=n2Fluyr3lbc
+Seconds
+4 Supabase ΓÇö Full Course freeCodeCamp ΓÇö https://www.youtube.com/watch?v=zBZgdTb-dns
+for Beginners
+5 MongoDB Atlas Traversy Media ΓÇö https://www.youtube.com/watch?v=084rfmWdo3c
+Complete Setup Guide
+6 Prisma ORM Crash Web Dev Simplified ΓÇö https://www.youtube.com/watch?v=RebA5J-
+Course rlwg
+7 Mongoose Crash Course Traversy Media
+ΓÇö https://www.youtube.com/watch?v=DZBGEVgL2eE
+8 Database Design Course freeCodeCamp ΓÇö https://www.youtube.com/watch?v=ztHopE5Wnpc
+
+=== PAGE 3 ===
+AI-ASSISTED FULL STACK WEB DEVELOPMENT
+9 SQL vs NoSQL Traversy Media ΓÇö https://www.youtube.com/watch?v=ruz-vK8IesE
+Explained
+10 Environment Variables in Web Dev Simplified
+Node.js ΓÇö https://www.youtube.com/watch?v=17UVejOw3zA
+4.2 Blogs and Articles
+# Title Source & Link
+1 Prisma Getting Started Prisma Docs ΓÇö https://www.prisma.io/docs/getting-started
+Guide
+2 Mongoose Mongoose ΓÇö https://mongoosejs.com/docs/guide.html
+Documentation
+3 Supabase Quickstart Supabase Docs ΓÇö https://supabase.com/docs/guides/getting-started
+4 MongoDB Atlas ΓÇö Get MongoDB Docs ΓÇö https://www.mongodb.com/docs/atlas/getting-
+Started started
+5 Database Schema Design Vertabelo Blog ΓÇö https://vertabelo.com/blog/database-design-tutorial
+Tutorial
+6 SQL vs NoSQL: MongoDB Blog ΓÇö https://www.mongodb.com/nosql-explained/nosql-
+Choosing the Right vs-sql
+Database
+7 PostgreSQL Tutorial ΓÇö PostgreSQL Tutorial ΓÇö https://www.postgresqltutorial.com
+Basics
+8 Secure Your .env File and freeCodeCamp News ΓÇö https://www.freecodecamp.org/news/how-to-
+API Keys use-env-variables-in-node
+9 Indexing Basics for Faster DigitalOcean Community
+Queries ΓÇö https://www.digitalocean.com/community/tutorials/sql-indexes
+10 One-to-Many and Many- Prisma Blog
+to-Many Relationships ΓÇö https://www.prisma.io/docs/concepts/components/prisma-
+schema/relations
+4.3 MOOCs / Courses
+# Course Platform & Link
+1 Databases and SQL for Data Coursera (IBM) ΓÇö https://www.coursera.org/learn/sql-data-
+Science science
+2 MongoDB University ΓÇö M001: MongoDB University (Free) ΓÇö https://learn.mongodb.com
+MongoDB Basics
+
+=== PAGE 4 ===
+AI-ASSISTED FULL STACK WEB DEVELOPMENT
+3 Full Stack Open ΓÇö Part 4 & 7 University of Helsinki (Free) ΓÇö https://fullstackopen.com/en
+(DB + Deployment)
+4 Relational Database Developer freeCodeCamp (Free)
+ΓÇö https://www.freecodecamp.org/learn/relational-database
+5. Deliverables
+Deliverable 1: Database Integration in GitHub Repo
+ΓÇó All 6+ API endpoints now read from and write to the real database.
+ΓÇó Schema file committed:
+o Prisma users: schema.prisma in the repo.
+o Mongoose users: model files in /models folder.
+ΓÇó .env.example in the repo showing DATABASE_URL (or MONGO_URI) as required variables (with
+placeholder values).
+ΓÇó README updated with:
+o Database choice and why.
+o Schema diagram (screenshot or embedded image).
+o "Set up the database" section in the README.
+Deliverable 2: Schema Diagram
+ΓÇó Simple visual showing your entities, fields, and relationships.
+ΓÇó Tools: Excalidraw (excalidraw.com), draw.io, dbdiagram.io, or Figma.
+ΓÇó Embed in README as an image, and submit as a separate PDF/image file.
+ΓÇó File name: W5_SchemaDiagram_[InternID].pdf or .png
+Deliverable 3: CRUD Verification Screenshots
+ΓÇó Single PDF with screenshots showing each operation working end-to-end from frontend:
+o Create: new record added
+o Read: list of records displayed
+o Update: record updated successfully
+o Delete: record removed
+ΓÇó For each screenshot, include a caption describing what the user did.
+ΓÇó File name: W5_CRUDVerification_[InternID].pdf
+Deliverable 4: Month-1 Reflection Video
+
+=== PAGE 5 ===
+AI-ASSISTED FULL STACK WEB DEVELOPMENT
+ΓÇó Duration: 5ΓÇô7 minutes.
+ΓÇó Content: 3 specific things you built or learned in Weeks 1ΓÇô4 (with a code snippet or screenshot
+shown on screen), one challenge you faced and how you debugged it, goals for Weeks 5ΓÇô9.
+ΓÇó Upload as YouTube Unlisted (not Public, not Private).
+ΓÇó Submit the link in the Reflection Video Link in the Week 5 Submission Form by Sunday 11:59
+PM IST of Week 5.
+6. Submission Instruction
+ΓÇó All submissions must be completed through the designated Google Form shared for Week 5
+deliverables. Submissions through any other medium will not be considered.
+ΓÇó In case of multiple files, it is mandatory to compress all files into a single .zip folder before
+uploading. Only one consolidated file should be submitted in the file upload section of the form.
+ΓÇó If an intern is unable to meet the submission deadline due to a genuine emergency, a formal email
+must be sent to interntbi@geu.ac.in by Sunday of the same week. Requests without valid
+justification or submissions after the deadline will not be considered.
+

@@ -1,0 +1,152 @@
+Week 7 — AI API Integration
+1. Overview of the Week
+This is the signature week of this domain — you integrate a real AI API into your app. The AI feature you planned in your Week 1 Project Brief now becomes functional. You will select an API, secure the API key, build the backend service that calls the AI, and surface the result in your frontend UI. By the end of this week, users can interact with an AI-powered feature inside your live-running app.
+2. What You Will Do This Week
+Choose your AI API:
+OpenAI (GPT-4o or GPT-4o-mini): best general-purpose quality; requires paid account with small credits.
+Google Gemini (gemini-1.5-flash or gemini-1.5-pro): free tier is generous; works well for chat and summarisation.
+Hugging Face Inference API: open-source models, fully free tier; use for specialised tasks (sentiment, summarisation, image captioning).
+Get your API key:
+OpenAI: platform.openai.com → API Keys
+Google Gemini: aistudio.google.com → Get API Key
+Hugging Face: huggingface.co → Settings → Access Tokens
+Store API keys securely:
+Add to .env as OPENAI_API_KEY, GEMINI_API_KEY, or HF_API_KEY
+Verify .env is in .gitignore before any commit — confirm by running git status
+Design the AI feature: exactly what the user inputs, what the AI does, what the user sees. Example features: "summarise a long document", "generate a quiz from notes", "rewrite text in a chosen tone", "AI chat assistant for a specific domain", "semantic search over user's saved items".
+Build the backend AI service:
+Create a new endpoint POST /api/ai/[feature] (e.g., /api/ai/summarise)
+The endpoint receives user input from the frontend, constructs a prompt, calls the AI API, parses the response, and returns formatted JSON to the frontend
+Add error handling — what happens if the API call fails, times out, or rate-limits
+Connect AI output to frontend:
+Build a frontend component that takes user input, sends it to your backend, and displays the result
+Show a loading state (your Loader from Week 3) while the AI is responding
+Show an error Toast if the call fails
+If using streaming responses (OpenAI streaming), progressively render the response as it arrives
+Write and iterate prompts: test at least 3 prompt variations for your feature. Document which one worked best and why in a PROMPTS.md file or in your README.
+3. Learning Outcomes for the Week
+Week Outcome
+Mapped to CLO
+Integrate an AI API (OpenAI / Gemini / Hugging Face) into a backend service
+CLO-5
+Securely store and manage API keys using environment variables
+CLO-5, CLO-4
+Build a user-facing AI feature with loading and error states
+CLO-5, CLO-1
+Write, test, and iterate prompts for a specific application task
+CLO-5, CLO-8
+4. Resources
+4.1 YouTube Videos
+# 
+Title / Content 
+Channel & Link 
+1 
+Build an AI App with OpenAI API — Full Tutorial 
+Fireship — https://www.youtube.com/watch?v=_j7JEDWuqLE 
+2 
+Google Gemini API Tutorial 
+Web Dev Simplified — https://www.youtube.com/watch?v=tLp1svIhM7k 
+3 
+Hugging Face Inference API Tutorial 
+Nicholas Renotte — https://www.youtube.com/watch?v=HrRVfxQRtQc 
+4 
+ChatGPT API — JavaScript Tutorial 
+Traversy Media — https://www.youtube.com/watch?v=uRQH2CFvedY 
+5 
+Build a Full Stack AI App with Next.js and OpenAI 
+JavaScript Mastery — https://www.youtube.com/watch?v=Sw5_J3KU5Sk 
+6 
+Streaming Responses from OpenAI 
+Fireship — https://www.youtube.com/watch?v=UvmmAkpp9M0 
+7 
+Prompt Engineering Crash Course 
+freeCodeCamp — https://www.youtube.com/watch?v=_ZvnD73m40o 
+8 
+How to Use Environment Variables Securely 
+Web Dev Simplified — https://www.youtube.com/watch?v=17UVejOw3zA 
+9 
+Build a RAG App (Retrieval Augmented Generation) 
+Fireship — https://www.youtube.com/watch?v=ibzlEQmgPPY 
+10 
+AI API Error Handling and Rate Limits 
+Coding Garden — https://www.youtube.com/watch?v=RlG4MJpthhM 
+4.2 Blogs and Articles
+# 
+Title 
+Source & Link 
+1 
+OpenAI API Quickstart Guide 
+OpenAI Docs — https://platform.openai.com/docs/quickstart 
+2 
+Google Gemini API Getting Started 
+Google AI for Developers — https://ai.google.dev/gemini-api/docs/get-started 
+3 
+Hugging Face Inference API Docs 
+Hugging Face — https://huggingface.co/docs/api-inference 
+4 
+Prompt Engineering Guide 
+promptingguide.ai — https://www.promptingguide.ai 
+5 
+OpenAI Best Practices for Prompt Engineering 
+OpenAI Cookbook — https://cookbook.openai.com 
+6 
+How to Keep API Keys Secure 
+freeCodeCamp News — https://www.freecodecamp.org/news/how-to-securely-store-api-keys 
+7 
+Streaming Chat Completions 
+OpenAI Docs — https://platform.openai.com/docs/api-reference/streaming 
+8 
+Comparing LLM APIs in 2024 
+Vercel AI Blog — https://vercel.com/blog/ai-sdk 
+9 
+Anthropic Claude API Documentation 
+Anthropic — https://docs.anthropic.com/en/api/getting-started 
+10 
+Building with LLMs — Practical Guide 
+a16z Blog — https://a16z.com/emerging-architectures-for-llm-applications 
+4.3 MOOCs / Courses
+# 
+Course 
+Platform & Link 
+1 
+ChatGPT Prompt Engineering for Developers 
+DeepLearning.AI (Free) — https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers 
+2 
+Generative AI for Developers 
+Coursera (Google Cloud) — https://www.coursera.org/learn/generative-ai-for-developers 
+3 
+Building Systems with the ChatGPT API 
+DeepLearning.AI (Free) — https://www.deeplearning.ai/short-courses/building-systems-with-chatgpt 
+4 
+LangChain for LLM Application Development 
+DeepLearning.AI (Free) — https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development 
+5. Deliverables
+Deliverable 1: AI Feature Live in Your App
+Feature end-to-end functional on localhost: user can submit input, see loading state, and receive AI-generated output.
+Backend service secure: API key only in .env, never in committed code.
+Loading state shown during API call.
+Error handling shown to user on failure.
+Deliverable 2: Demo Screenshot and GitHub Commit
+3 screenshots of the AI feature in action:
+User input screen
+Loading state (mid-request)
+Final AI output displayed
+Include browser Network tab showing the POST /api/ai/… request with status 200.
+Commit message for this week should clearly mention the AI feature (e.g., feat: integrate OpenAI summariser with loading and error states).
+File name: W7_AIFeatureDemo_[InternID].pdf
+Deliverable 3: Prompts Log (PROMPTS.md in Repo)
+A Markdown file in your GitHub repo (PROMPTS.md at repo root, or inside /docs/) documenting:
+The 3 prompt variations you tested.
+Example input and output for each.
+Which one worked best and why (3–4 sentences).
+Any system prompt or role you used.
+Deliverable 4: Mandatory Peer Code Review
+Review 2 classmates' GitHub repos.
+For each review, submit a 150-word structured comment covering: 1 architectural observation, 1 specific code suggestion (with file reference if possible), 1 question.
+6. Submission Instructions
+Note: The TBI-GEU LMS has been discontinued. All Week 7 submissions — including deliverables and peer code review comments — must now be made via the Google Form provided by the program coordinator.
+Submit the following via the designated Google Form by Sunday, 11:59 PM IST:
+W7_AIFeatureDemo_[InternID].pdf
+The GitHub repo URL (with the AI feature committed and PROMPTS.md in place), entered in the corresponding form field
+2 peer code review comments (mandatory this week), entered in the corresponding form field(s)
+The Weekly Progress Report

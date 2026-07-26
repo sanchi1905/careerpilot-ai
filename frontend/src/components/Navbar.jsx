@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Compass, Menu, X, ArrowRight, Sun, Moon, LayoutGrid } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Compass, Menu, X, ArrowRight, Sun, Moon, LayoutGrid, LogOut, User } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { isDark, toggle } = useTheme();
+  const { isAuthenticated, user, logout } = useAuth();
 
-  const links = [
+  const publicLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
+  ];
+
+  const authLinks = [
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Showcase', path: '/showcase', icon: LayoutGrid },
   ];
 
+  const links = isAuthenticated ? [...publicLinks, ...authLinks] : publicLinks;
+
   const isActive = (path) => location.pathname === path;
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+    setIsOpen(false);
+  };
 
   return (
     <nav className="cp-nav sticky top-0 z-50">
@@ -63,13 +77,42 @@ export default function Navbar() {
               {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
 
-            <Link
-              to="/login"
-              className="inline-flex items-center space-x-1 text-sm font-medium bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white px-4 py-2 rounded-xl transition-all duration-200 shadow-lg shadow-indigo-500/10 hover:shadow-indigo-500/20"
-            >
-              <span>Sign In</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            {isAuthenticated ? (
+              <div className="flex items-center gap-2">
+                {/* User pill */}
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-cp-border cp-bg-surface text-sm cp-text-secondary">
+                  <User className="h-3.5 w-3.5 text-indigo-400" />
+                  <span className="max-w-[120px] truncate font-medium cp-text-primary">
+                    {user?.name || user?.email || 'User'}
+                  </span>
+                </div>
+                {/* Logout */}
+                <button
+                  id="navbar-logout"
+                  onClick={handleLogout}
+                  className="flex items-center gap-1.5 text-sm font-medium text-cp-text-secondary hover:text-red-400 border border-cp-border hover:border-red-500/30 px-3 py-2 rounded-xl transition-all duration-200"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link
+                  to="/login"
+                  className="text-sm font-medium cp-text-secondary hover:text-cp-text-primary px-3 py-2 rounded-xl transition-colors duration-200"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  className="inline-flex items-center space-x-1 text-sm font-medium bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white px-4 py-2 rounded-xl transition-all duration-200 shadow-lg shadow-indigo-500/10 hover:shadow-indigo-500/20"
+                >
+                  <span>Get Started</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -110,15 +153,41 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <div className="pt-4 pb-2 border-t border-cp-border">
-            <Link
-              to="/login"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center space-x-1 w-full text-center bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-4 py-2.5 rounded-lg font-medium transition-all duration-200"
-            >
-              <span>Sign In</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+          <div className="pt-4 pb-2 border-t border-cp-border space-y-2">
+            {isAuthenticated ? (
+              <>
+                <div className="flex items-center gap-2 px-3 py-2 text-sm cp-text-secondary">
+                  <User className="h-4 w-4 text-indigo-400" />
+                  <span className="font-medium cp-text-primary truncate">{user?.name || user?.email}</span>
+                </div>
+                <button
+                  id="navbar-logout-mobile"
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-red-400 hover:bg-red-500/10 transition-colors duration-200"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center w-full text-center border border-cp-border text-cp-text-primary px-4 py-2.5 rounded-lg font-medium transition-all duration-200"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center space-x-1 w-full text-center bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-4 py-2.5 rounded-lg font-medium transition-all duration-200"
+                >
+                  <span>Get Started</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

@@ -1,0 +1,134 @@
+Week 8 — Frontend Integration & Polish 
+1. Overview of the Week 
+By this point all the backend layers are complete — CRUD, authentication, and the AI feature are all working. But the frontend is still largely the skeleton from Weeks 2 and 3. This week is dedicated to wiring every page and component to real backend data, completing the user-facing flows for all core features, and polishing the UI so the app looks and feels production-grade before deployment in Week 9. Every screen your user will touch must work end-to-end by Sunday. 
+2. What You Will Do This Week 
+Wire every page to real backend data: Replace any remaining hardcoded or mock data in your React/Next.js components with live API calls. Every list, card, and detail view should fetch from your Express/FastAPI backend. Use your Loader component during fetch and your Toast component on errors. 
+Build the authenticated dashboard: Implement the main logged-in screen your user lands on after sign-in. It should display data scoped to the current user (e.g., their tasks, posts, or saved items), fetched using the JWT from the auth flow you built in Week 6. 
+Complete the AI feature UI: The AI endpoint is live from Week 7 — now build the full frontend experience around it. This means a properly designed input area, a streaming or animated loading state, a well-formatted output display, and graceful error handling with user-friendly messages. 
+Complete all CRUD user flows: For each resource in your app (e.g., tasks, posts, notes), ensure the full create → read → update → delete loop is accessible from the UI. Forms must validate inputs before submission. Success and error states must be shown to the user. 
+Responsive polish pass: Open every page in Chrome DevTools at 375px (mobile), 768px (tablet), and 1440px (desktop). Fix any layout breaks, overflowing text, or elements that are too small to tap on mobile. Use Tailwind responsive prefixes (sm:, md:, lg:) to fix issues. 
+UI/UX refinements: Review every screen against your Week 3 Figma wireframes. Fix alignment, spacing, and colour inconsistencies. Add empty-state components for lists that have no data (e.g., “No tasks yet — add your first one”). Add confirmation dialogs before destructive actions like delete. 
+Error boundaries and edge cases: Add a React error boundary component to catch unexpected render errors gracefully. Test what happens when the backend is slow, returns an error, or the user is not authenticated — the app should never show a blank white screen. 
+Performance check: Open Chrome DevTools → Network tab. Identify any API calls that fire repeatedly on each render. Fix unnecessary re-renders using useMemo or useCallback where appropriate. Ensure images are not oversized. 
+Commit regularly: Minimum 4 commits this week with descriptive messages (e.g., “feat: wire dashboard to /api/tasks with loading state”, “fix: empty state for zero-item task list”, “feat: complete AI feature UI with streaming output”).  
+3. Learning Outcomes for the Week 
+Week Outcome 
+Mapped to CLO 
+Connect all frontend components to live backend APIs with loading and error states 
+CLO-1, CLO-2 
+Build a complete authenticated user dashboard scoped to the logged-in user 
+CLO-1, CLO-4 
+Complete the AI feature UI with a polished input, output, and error experience 
+CLO-1, CLO-5 
+Implement full CRUD flows in the UI with validation and user feedback 
+CLO-1, CLO-2 
+Pass a responsive check across mobile, tablet, and desktop breakpoints 
+CLO-1 
+4. Resources 
+4.1 YouTube Videos 
+# 
+Title / Content 
+Channel & Link 
+1 
+React Data Fetching with useEffect and useState 
+Web Dev Simplified — https://www.youtube.com/watch?v=bGdzS7TcRIo 
+2 
+React Query (TanStack Query) Crash Course 
+Traversy Media — https://www.youtube.com/watch?v=r8Dg0KVnfMA 
+3 
+Build a Full Stack App — Connect React to Express 
+freeCodeCamp — https://www.youtube.com/watch?v=mrHNSanmqQ4 
+4 
+React Loading and Error States — Best Practices 
+Jack Herrington — https://www.youtube.com/watch?v=DTgBMHMXzg0 
+5 
+Build a Protected Dashboard in Next.js with Auth 
+Hamed Bahram — https://www.youtube.com/watch?v=md65iBX5Gxg 
+6 
+Tailwind CSS Responsive Design — Advanced 
+Kevin Powell — https://www.youtube.com/watch?v=hX_kFiGHpQE 
+7 
+React Error Boundaries Explained 
+Web Dev Simplified — https://www.youtube.com/watch?v=DNYXgtZBRPE 
+8 
+React Forms and Validation with React Hook Form 
+Traversy Media — https://www.youtube.com/watch?v=bU_eq8qyjic 
+9 
+Streaming AI Responses to React Frontend 
+Fireship — https://www.youtube.com/watch?v=UvmmAkpp9M0 
+10 
+React Performance Optimisation — useMemo and useCallback 
+Web Dev Simplified — https://www.youtube.com/watch?v=_AyFP5s69N4 
+4.2 Blogs and Articles 
+# 
+Title 
+Source & Link 
+1 
+Fetching Data in React — Official Docs 
+React — https://react.dev/learn/synchronizing-with-effects 
+2 
+TanStack Query — Getting Started 
+TanStack — https://tanstack.com/query/latest/docs/react/quick-start 
+3 
+React Hook Form Documentation 
+React Hook Form — https://react-hook-form.com/get-started 
+4 
+Next.js Middleware for Auth Protection 
+Next.js Docs — https://nextjs.org/docs/app/building-your-application/routing/middleware 
+5 
+Responsive Design with Tailwind CSS 
+Tailwind Docs — https://tailwindcss.com/docs/responsive-design 
+6 
+React Error Boundaries 
+React Docs — https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary 
+7 
+Optimistic UI Updates in React 
+LogRocket Blog — https://blog.logrocket.com/how-to-implement-optimistic-ui-react 
+8 
+Empty State Design Patterns 
+UX Design — https://uxdesign.cc/designing-empty-states-in-web-apps 
+9 
+Web Performance Basics for Frontend Devs 
+web.dev — https://web.dev/performance 
+10 
+Building Accessible Forms in React 
+Smashing Magazine — https://www.smashingmagazine.com/2023/02/accessible-forms-react 
+4.3 MOOCs / Courses 
+# 
+Course 
+Platform & Link 
+1 
+Full Stack Open — Part 2 (Communicating with Server) 
+University of Helsinki (Free) — https://fullstackopen.com/en/part2 
+2 
+React — The Complete Guide (incl. Hooks, React Router, Redux) 
+Udemy (Paid) — https://www.udemy.com/course/react-the-complete-guide-incl-redux 
+3 
+Front End Development Libraries 
+freeCodeCamp (Free) — https://www.freecodecamp.org/learn/front-end-development-libraries 
+4 
+Advanced React — Meta Front-End Developer 
+Coursera (Meta) — https://www.coursera.org/learn/advanced-react 
+5. Deliverables 
+Deliverable 1: Fully Connected Frontend in GitHub Repo 
+Zero hardcoded/mock data: every component reads from a real API endpoint. 
+Authenticated dashboard: a logged-in user sees their own data; a guest is redirected to /login. 
+Full CRUD in the UI: create, read, update, and delete all work from the frontend with validation and feedback. 
+AI feature UI complete: input, loading state, output display, and error handling all polished. 
+Responsive: no layout breaks at 375px, 768px, or 1440px. 
+Minimum 4 commits this week, each with a descriptive message. 
+Deliverable 2: Frontend Completion Screenshots (PDF) 
+A single PDF with the following screenshots and captions: 
+Authenticated dashboard: logged-in user view with real data loaded. 
+Create flow: form filled and submitted, new record visible in the list. 
+Update and Delete flow: record edited and then deleted. 
+AI feature UI: input entered, loading state shown, output displayed. 
+Responsive check: one page at mobile (375px) and desktop (1440px) side by side. 
+Empty state: at least one component showing its empty-state design. 
+File name: W8_FrontendCompletion_[InternID].pdf 
+Deliverable 3: Network Tab Verification Screenshot (included in PDF) 
+One screenshot of Chrome DevTools Network tab showing at least 3 successful API calls (status 200) fired from the frontend, with the URL and response size visible. Include as the last page of the PDF above.  
+6. Submission Instructions 
+All submissions must be completed through the designated Google Form shared for Week 5 deliverables. Submissions through any other medium will not be considered.
+In case of multiple files, it is mandatory to compress all files into a single .zip folder before uploading. Only one consolidated file should be submitted in the file upload section of the form.
+If an intern is unable to meet the submission deadline due to a genuine emergency, a formal email must be sent to interntbi@geu.ac.in by Sunday of the same week. Requests without valid justification or submissions after the deadline will not be considered.

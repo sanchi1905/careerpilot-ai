@@ -18,5 +18,5 @@ def get_docx_text(path):
             paragraphs.append(''.join(texts))
     return '\n'.join(paragraphs)
 
-with open('week7_content.txt', 'w', encoding='utf-8') as f:
-    f.write(get_docx_text('FSD_Week7_Modules-SIP26.docx'))
+with open('week8_content.txt', 'w', encoding='utf-8') as f:
+    f.write(get_docx_text('AI FULL STACK_Week8_Modules-SIP26.docx'))

@@ -1,0 +1,161 @@
+Week 9 — App Deployment & Go-Live 
+1. Overview of the Week 
+This is the week your app becomes real. You take everything from localhost and deploy it to the public internet. The frontend goes to Vercel, the backend goes to Render, and your database is already hosted (Supabase or MongoDB Atlas). You will debug deployment issues — this is where most apps break for the first time, and you will learn to fix those breakages methodically. By the end of this week, anyone in the world can open your app's URL and use it.  
+2. What You Will Do This Week 
+Prepare your code for production:  
+Replace all http://localhost:5000 URLs in frontend with an environment variable (e.g., VITE_API_URL or NEXT_PUBLIC_API_URL). 
+Remove console.log spam, but keep intentional logging. 
+Set CORS on the backend to allow your production frontend URL. 
+Verify .env is never committed. 
+Deploy the frontend to Vercel:  
+Go to vercel.com → New Project → Import your GitHub repo. 
+Set the root directory if your frontend is in a subfolder. 
+Add environment variables via Vercel dashboard (not CLI): NEXT_PUBLIC_API_URL pointing to your Render backend URL (which you will get in the next step). 
+Click Deploy. Note the assigned URL (e.g., yourapp.vercel.app). 
+Deploy the backend to Render:  
+Go to render.com → New Web Service → Connect GitHub → select your repo. 
+Set root directory if backend is in a subfolder (backend/). 
+Build command: npm install (Node) or pip install -r requirements.txt (Python). 
+Start command: npm start or uvicorn main:app --host 0.0.0.0 --port $PORT. 
+Add environment variables via Render dashboard: DATABASE_URL, JWT_SECRET, OPENAI_API_KEY (or equivalent), and any OAuth secrets. 
+Deploy. Note the Render URL (e.g., yourapp-api.onrender.com). 
+Update frontend env var on Vercel to point to the Render URL, then redeploy. 
+End-to-end test on the live URL:  
+All pages load. 
+Registration and login work. 
+CRUD operations persist to the database. 
+AI feature works. 
+OAuth login completes successfully (update OAuth redirect URLs in Google/GitHub console to include the production URL). 
+Debug common deployment issues:  
+CORS errors: update backend CORS config to include your Vercel URL. 
+Missing env vars: check Render and Vercel dashboards. 
+Database connection errors: whitelist 0.0.0.0/0 in MongoDB Atlas for Render's IP range (or specific Render IPs if known); Supabase usually works out of the box. 
+OAuth redirect mismatch: update callback URLs in Google/GitHub OAuth settings to match production. 
+3. Learning Outcomes for the Week 
+Week Outcome 
+Mapped to CLO 
+Deploy a React/Next.js frontend to Vercel with environment variables configured 
+CLO-6 
+Deploy a Node or Python backend to Render with environment variables configured 
+CLO-6 
+Debug common deployment issues (CORS, env vars, hardcoded localhost, OAuth redirects) 
+CLO-6 
+Verify end-to-end functionality of a full-stack app on a live public URL 
+CLO-6, CLO-2, CLO-5 
+4. Resources 
+4.1 YouTube Videos 
+# 
+Title / Content 
+Channel & Link 
+1 
+Deploy a Next.js App to Vercel in 2 Minutes 
+Fireship — https://www.youtube.com/watch?v=2HBIzEx6IZA 
+2 
+How to Deploy a Node.js App on Render 
+Traversy Media — https://www.youtube.com/watch?v=bnr-8pSuE2Q 
+3 
+MERN Stack Deployment — Full Guide 
+Code Commerce — https://www.youtube.com/watch?v=l134cBAJCuc 
+4 
+Vercel Deployment — Environment Variables 
+Vercel Official — https://www.youtube.com/watch?v=ZkKyb0k41tE 
+5 
+Render Deployment Full Tutorial 
+Coding in Flow — https://www.youtube.com/watch?v=sQWC-CM_Yzs 
+6 
+Fixing CORS Errors in Production 
+Web Dev Simplified — https://www.youtube.com/watch?v=4KHiSt0oLJ0 
+7 
+Deploy FastAPI on Render — Free Tier 
+Eric Roby — https://www.youtube.com/watch?v=l-9VjdzdxgY 
+8 
+Debugging Deployment Errors 
+Dave Gray — https://www.youtube.com/watch?v=1kqp8j5S8aE 
+9 
+Custom Domains on Vercel 
+Vercel Official — https://www.youtube.com/watch?v=D18i-yVJjwE 
+10 
+MongoDB Atlas — IP Whitelisting for Deployment 
+MongoDB — https://www.youtube.com/watch?v=rPqRyYJmx2g 
+4.2 Blogs and Articles 
+# 
+Title 
+Source & Link 
+1 
+Vercel Deployment Documentation 
+Vercel Docs — https://vercel.com/docs/deployments/overview 
+2 
+Render — Deploy a Node App 
+Render Docs — https://render.com/docs/deploy-node-express-app 
+3 
+Render — Deploy a FastAPI App 
+Render Docs — https://render.com/docs/deploy-fastapi 
+4 
+Environment Variables on Vercel 
+Vercel Docs — https://vercel.com/docs/projects/environment-variables 
+5 
+Next.js Deployment Best Practices 
+Next.js Docs — https://nextjs.org/docs/app/building-your-application/deploying 
+6 
+Fixing CORS Errors in Production 
+DEV Community — https://dev.to/t/cors 
+7 
+Free Deployment Options for Students 
+freeCodeCamp News — https://www.freecodecamp.org/news/free-hosting-for-your-web-app 
+8 
+MongoDB Atlas IP Whitelisting 
+MongoDB Docs — https://www.mongodb.com/docs/atlas/security-whitelist 
+9 
+How to Debug Vercel Build Failures 
+Vercel Blog — https://vercel.com/guides/how-do-i-debug-failed-builds 
+10 
+OAuth Callback URLs for Production 
+NextAuth Docs — https://next-auth.js.org/configuration/options 
+4.3 MOOCs / Courses 
+# 
+Course 
+Platform & Link 
+1 
+DevOps on AWS Specialisation 
+Coursera — https://www.coursera.org/specializations/devops-on-aws 
+2 
+Introduction to DevOps 
+IBM on Coursera — https://www.coursera.org/learn/introduction-to-devops 
+3 
+Full Stack Open — Part 7 (Deployment) 
+University of Helsinki (Free) — https://fullstackopen.com/en/part7 
+4 
+Google Cloud Fundamentals: Core Infrastructure 
+Coursera — https://www.coursera.org/learn/gcp-fundamentals 
+ 
+5. Deliverables 
+Deliverable 1: Live Public App URL 
+Your app must be accessible at a public URL (Vercel URL, e.g., yourapp.vercel.app). 
+All core features must work on the live URL:  
+Pages load without errors 
+Register / login works 
+CRUD persists to the database 
+AI feature functional 
+OAuth login working (if implemented) 
+Post the live URL. 
+Deliverable 2: Deployment Documentation 
+Add a section to your README:  
+Live frontend URL 
+Live backend URL 
+Tech stack summary 
+"Known limitations on free tier" (e.g., Render free tier spins down after 15 min of inactivity — first request after idle takes 30–60 sec to wake up). 
+Deliverable 3: Peer Testing Feedback 
+Test 2 classmates' live apps via the Forum thread. 
+For each app, post 1 comment with: 1 thing that works well, 1 bug or issue you found (with steps to reproduce). 
+Keep comments constructive and specific. 
+Deliverable 4: Deployment Screenshots PDF 
+4 screenshots:  
+Vercel dashboard showing successful frontend deployment 
+Render dashboard showing successful backend deployment 
+Live app home page (with the URL visible in the browser) 
+Live app AI feature or login flow working 
+File name: W9_DeploymentProof_[InternID].pdf  
+6. Submission Instructions 
+All submissions must be completed through the designated Google Form shared for Week 9 deliverables. Submissions through any other medium will not be considered.
+In case of multiple files, it is mandatory to compress all files into a single .zip folder before uploading. Only one consolidated file should be submitted in the file upload section of the form.
+If an intern is unable to meet the submission deadline due to a genuine emergency, a formal email must be sent to interntbi@geu.ac.in by Sunday of the same week. Requests without valid justification or submissions after the deadline will not be considered.

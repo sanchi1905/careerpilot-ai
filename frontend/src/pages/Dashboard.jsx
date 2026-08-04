@@ -6,7 +6,7 @@ import { useToast } from '../components/ui/Toast';
 import { useAuth } from '../context/AuthContext';
 import { Briefcase, CheckCircle, Clock, FileText, Plus, Search, X, Pencil, Trash2, RefreshCw, Sparkles, Bot } from 'lucide-react';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const STATUS_COLORS = {
   applied: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',

@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, ArrowRight, Compass, Eye, EyeOff, AlertCircle } from 'lucide-react';
 
-const GITHUB_AUTH_URL = 'http://localhost:5000/api/auth/github';
+const GITHUB_AUTH_URL = import.meta.env.VITE_GITHUB_AUTH_URL || 'http://localhost:5000/api/auth/github';
 
 export default function Login() {
   const navigate = useNavigate();

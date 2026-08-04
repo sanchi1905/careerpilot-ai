@@ -154,3 +154,73 @@ npm run dev
 Frontend runs at: **http://localhost:5173**
 
 > ⚠️ Make sure the backend is running on port 5000 before using the dashboard.
+
+---
+
+## 🚀 Deployment
+
+### Live URLs
+
+| Service | URL |
+|---------|-----|
+| **Frontend (Vercel)** | https://careerpilot-ai.vercel.app |
+| **Backend (Render)** | https://careerpilot-ai-api.onrender.com |
+
+> ⚠️ Replace the URLs above with your actual deployed URLs after completing deployment.
+
+### Tech Stack Summary
+
+| Layer | Technology | Hosting |
+|-------|-----------|---------|
+| Frontend | React 19 + Vite + Tailwind CSS | Vercel |
+| Backend | Node.js + Express.js | Render (Free Tier) |
+| Database | MongoDB Atlas (Mongoose ODM) | MongoDB Atlas (M0 Free) |
+| Auth | JWT + GitHub OAuth (Passport.js) | — |
+| AI Feature | Google Gemini API | — |
+
+### Environment Variables
+
+**Frontend (set in Vercel Dashboard):**
+```
+VITE_API_URL=https://your-render-url.onrender.com/api
+VITE_GITHUB_AUTH_URL=https://your-render-url.onrender.com/api/auth/github
+```
+
+**Backend (set in Render Dashboard):**
+```
+PORT=10000
+MONGO_URI=mongodb+srv://...
+JWT_SECRET=...
+SESSION_SECRET=...
+FRONTEND_ORIGIN=https://your-vercel-url.vercel.app
+GITHUB_CLIENT_ID=...
+GITHUB_CLIENT_SECRET=...
+```
+
+### Known Limitations on Free Tier
+
+- **Render free tier spins down** after 15 minutes of inactivity. The first request after idle takes **30–60 seconds** to wake up the backend. Subsequent requests are fast.
+- **MongoDB Atlas M0** has a 512 MB storage cap and max 500 connections — more than enough for this project.
+- **Vercel** free tier has a 100 GB bandwidth/month limit — not a concern for a demo app.
+
+### Deploying from Scratch
+
+#### Frontend → Vercel
+1. Go to [vercel.com](https://vercel.com) → **New Project** → Import your GitHub repo
+2. Set **Root Directory** to `frontend`
+3. Add environment variables: `VITE_API_URL`, `VITE_GITHUB_AUTH_URL`
+4. Click **Deploy**
+
+#### Backend → Render
+1. Go to [render.com](https://render.com) → **New Web Service** → Connect GitHub
+2. Set **Root Directory** to `backend`
+3. **Build Command:** `npm install`
+4. **Start Command:** `npm start`
+5. Add all environment variables listed above
+6. Click **Deploy**
+
+#### Post-Deployment Checklist
+- [ ] Update `VITE_API_URL` on Vercel to point to the Render URL
+- [ ] Update `FRONTEND_ORIGIN` on Render to point to the Vercel URL
+- [ ] Update GitHub OAuth callback URL in [GitHub Developer Settings](https://github.com/settings/developers) to `https://your-render-url.onrender.com/api/auth/github/callback`
+- [ ] Whitelist `0.0.0.0/0` in MongoDB Atlas Network Access for Render
